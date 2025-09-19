@@ -1,7 +1,5 @@
 from utils.spark_utils import *
 
-from pyspark.sql.functions import *
-
 spark = get_spark_session()
 
 person_data = [(1, "Allen", "Wang"), (2, "Bob", "Alice")]
