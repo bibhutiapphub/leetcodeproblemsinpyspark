@@ -14,3 +14,12 @@ customers_never_ordered_df = (customers_df.join(orders_df,join_cond,"left")
                               .where(orders_df.Id.isNull())
                               .select(customers_df.Name.alias("Customers")))
 customers_never_ordered_df.show()
+
+# Another approach using NOT IN
+customers_ids_row = orders_df.select("CustomerId").collect()
+customers_ids_list = [int(cust_row.CustomerId) for cust_row in customers_ids_row]
+
+customers_never_ordered_new_df = (customers_df
+                                  .filter(~col("Id").isin(customers_ids_list))
+                                  .select(col("Name").alias("Customers")))
+customers_never_ordered_new_df.show()
