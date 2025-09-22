@@ -25,3 +25,17 @@ final_df = (emp_df.join(dept_df,join_cond)
                      ,emp_df.Name.alias("Employee")
                      ,emp_df.Salary))
 final_df.show()
+
+# Alternative approach
+department_max_sal_rows = emp_df.groupBy("departmentId").agg(max("Salary").alias("maxSalary")).collect()
+
+max_salary_list = [int(row.maxSalary) for row in department_max_sal_rows]
+departments_list = [int(row.departmentId) for row in department_max_sal_rows]
+
+another_final_df = (emp_df.join(dept_df,join_cond)
+                    .where(emp_df.departmentId.isin(departments_list) & emp_df.Salary.isin(max_salary_list))
+                    .select(dept_df.Name.alias("Department")
+                            , emp_df.Name.alias("Employee")
+                            , emp_df.Salary))
+
+another_final_df.show()
