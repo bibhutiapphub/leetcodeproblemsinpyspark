@@ -9,14 +9,14 @@ my_data = [(1,"2015-01-01",10)
             ,(3,"2015-01-03",20)
             ,(4,"2015-01-04",30)]
 
+# Using window function
 lagTempValue = lag("temperature").over(Window.orderBy("recordDate"))
-
 my_df = (spark.createDataFrame(my_data)
          .toDF("id","recordDate","temperature")
          .withColumn("recordDate",to_date(col("recordDate"),"yyyy-MM-dd"))
          .withColumn("lagTemprature",lagTempValue)
          .where(col("temperature") > col("lagTemprature"))
-         .select("id"))
+         .select("*"))
 
 
 my_df.show()
