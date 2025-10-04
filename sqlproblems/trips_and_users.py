@@ -30,7 +30,7 @@ if __name__ == "__main__":
     users_df = (spark.createDataFrame(users_data)
                 .toDF("user_id", "banned", "role"))
 
-    join_cond = trips_df.client_id == users_df.user_id
+    join_cond = (trips_df.client_id == users_df.user_id)
 
     unbanned_clients_trips_df = (trips_df.join(users_df, join_cond, "inner")
                                  .where(users_df.banned == "No")
