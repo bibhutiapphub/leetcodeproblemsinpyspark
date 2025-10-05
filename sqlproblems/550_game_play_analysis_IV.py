@@ -1,6 +1,4 @@
 from pyspark.sql import Window
-from pyspark.sql.functions import date_diff
-
 from utils.spark_utils import *
 from pyspark.sql.functions import *
 
@@ -26,6 +24,6 @@ if __name__ == "__main__":
                                    .otherwise(0))
                        .withColumn("row_num", row_num_window)
                        .where("row_num = 1")
-                       .select(round(avg("is_consecutive_days_played"),2).alias("fraction"))
+                       .select(round(avg("is_consecutive_days_played"), 2).alias("fraction"))
                        )
     final_window_df.show()
