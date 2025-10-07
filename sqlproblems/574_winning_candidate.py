@@ -28,6 +28,5 @@ if __name__ == "__main__":
                 .withColumn("row_num",row_number().over(Window.orderBy(desc("vote_count"))))
                 .where("row_num = 1")
                 .select("Name")
-                # .select("Name")
                 )
     final_df.show()
