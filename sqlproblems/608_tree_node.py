@@ -9,7 +9,8 @@ if __name__ == "__main__":
         , (2, 1)
         , (3, 1)
         , (4, 2)
-        , (5, 2)]
+        , (5, 2)
+        , (6, 3)]
     tree_df = spark.createDataFrame(tree_data).toDF("id", "p_id")
     joined_df = (tree_df.alias("tree_1")
                  .join(tree_df.alias("tree_2"), col("tree_1.id") == col("tree_2.p_id"), "left")
